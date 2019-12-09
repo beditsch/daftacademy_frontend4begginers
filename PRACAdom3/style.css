@@ -1,0 +1,582 @@
+/*
+Przeglądarki internetowe nadają znacznikom HTML wartości początkowe,
+które się różnią w zależności od producenta (np. Chrome, Firefox, Opera, Internet Explorer, Microsoft Edge).
+Dlatego popularną praktyką jest tworzenie tzw. resetów,
+czyli plików CSS zawierających reguły, które nadpisują te wartości,
+aby były one jednolite niezalenie od przeglądarki.
+
+Więcej na ten temat: https://cssreset.com/what-is-a-css-reset/
+*/
+
+* {
+    box-sizing: border-box;
+    background-attachment: fixed;
+    background-image: url(./images/background.svg);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ZAGADNIENIE PONADPROGRAMOWE
+
+Rekomendowany zestaw właściwości, które pozwalają na ukrycie tekstu w taki sposób,
+że będzie niewidoczny do standardowego użytkownika, a czytniki ekranowe wciąż będą go czytać.
+
+Więcej na ten temat: https://webaim.org/techniques/css/invisiblecontent/
+*/
+.screen-reader-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/*
+Sekcja pomocnicza, aby zwizualizować pozycje głównych bloków strony. Będzie usunięta w następnych krokach.
+*/
+.page-header {
+    background-color: #ffb1b1;
+}
+
+.page-content {
+    background-color: #b0ffb0;
+}
+
+.page-footer {
+    background-color: #7ba3ff;
+}
+
+.content-section {
+    background-color: #ca9aca;
+}
+.content-section:nth-child(odd) {
+    background-color: #e69fe6;
+}
+/*
+Koniec sekcji pomocniczej
+*/
+
+/*
+Ustawiając sekcje nagłówka i stopki w pozycji 'fixed' sprawiamy,
+że niezależnie od pozycji paska przewijania elementy te będą znajdowały się
+w tej samej pozycji względem okna przeglądarki.
+Natomiast pozycję tę ustawiamy za pomocą parametrów 'top', 'bottom', 'right', 'left'.
+*/
+.page-header {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+}
+
+.page-footer {
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+}
+
+@media (max-width: 600px) {
+  .page-header {
+      position: static;
+      text-align: center;
+      width: 100%;
+  }
+  .page-brand {
+    height: 10vh;
+    padding: 10px;
+  }
+  .page-header__logo {
+    height: 100%;
+  }
+  .page-footer {
+      position: static;
+  }
+}
+
+/*
+Lewy margines ustawiony na kontenerze z główną zawartością strony sprawia,
+że nie będzie ona nachodzić na nagłówek i stopkę niezależnie od pozycji paska przewijania.
+Na projekcie graficznym sekcja menu ma szerokość około 170px i jest oddalona od krawędzi ekranu
+o 50px, więc można założyć, że 220px marginesu będzie wartością stosunkowo bezpieczną.
+Z kolei spady (padding) nadane na kontener wyznaczają minimalną odległość, na jaką będzie oddalona
+treść strony od otaczających ją granic kontenera (wartość "0 10%" jest
+skrótem od padding-top: 0, padding-bottom: 0, padding-left: 10%, padding-right: 10%).
+Właściwość "text-align: right" przykleja zawartość do prawej strony
+(oddziałuje na elementy, które są elementami inline'owymi, np. tekst, znaczniki <a>, <span> czy elementy z nadanym stylem "display: inline-block").
+*/
+.page-content {
+    margin-left: 220px;
+    padding: 0 10%;
+    text-align: right;
+}
+
+@media (max-width: 600px) {
+  .page-content {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+  }
+}
+
+
+
+/* MOJE DODANIE */
+.band-members {
+  width: 100%;
+  display: grid;
+  /* align-items: center; */
+  grid-template-columns: 1.03fr 1.4fr 1fr 1.12fr;
+}
+
+@media (max-width: 600px) {
+  .band-members {
+      grid-template-columns: 1fr;
+      align-content: center;
+
+  }
+
+}
+
+.band-members__item {
+  display: inline-block;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .band-members__item {
+    text-align: center;
+    margin-top: 15vh;
+  }
+}
+
+.band-members__name {
+  padding-top: 50px;
+}
+
+@media (max-width: 600px) {
+  .band-members__name {
+    padding-top: 0px;
+  }
+}
+
+
+.band-members__image {
+  max-width: 100%;
+  min-height: 200px;
+}
+
+#home {
+  display: grid;
+  align-items: center;
+}
+
+
+@media (max-width: 600px) {
+  .content-section__header {
+    margin-top: 15vh;
+  }
+}
+
+
+
+
+.about-section__desc {
+  text-align: left;
+  max-width: 400px;
+  position: absolute;
+  padding: 30px 20px;
+  left: 0;
+  bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .about-section__desc {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+#about {
+  position: relative;
+}
+
+.about-section__desc-header {
+  margin-bottom: 4%;
+}
+
+#about img {
+  max-width: 70%;
+}
+
+
+.concerts {
+  display: grid;
+  padding-left: 100px;
+  /* grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); */
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 50px;
+  padding-bottom: 50px;
+}
+
+
+@media (max-width: 600px) {
+  .concerts {
+    padding-left: 0;
+    /* grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); */
+    grid-template-columns: 1fr;
+    grid-gap: 5vh;
+    margin: 0 3vh;
+    padding-bottom: 50px;
+  }
+}
+
+
+
+.concerts__image {
+  max-width: 100%;
+  margin-bottom: 15px;
+}
+
+.concerts__info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 20px);
+}
+
+.concerts__date {
+  margin: 0;
+  text-align: left;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.concerts__location{
+  margin: 0;
+  text-align: left;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+
+.concerts__info .button {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  width: 70%;
+  justify-self: end;
+}
+
+.buttonReplacingText {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  text-align: center;
+  width: 100%;
+  /* justify-self: end; */
+  /* font-family: "Open Sans";
+  color: rgba(204, 200, 255, 0.8);
+  font-weight: SEMIBOLD;
+  font-size: 18px; */
+  /* text-transform: uppercase; */
+  margin: auto;
+}
+
+
+/* HAMBURGER MENU */
+.hamburger {
+  display: block;
+  text-align: right;
+  width: 100%;
+  border-style: none;
+  color: #EF008E;
+  display: none;
+  padding-right: 10vw;
+  font-size: 20px;
+  outline: none;
+}
+@media (max-width: 600px) {
+  .hamburger {
+    display: block;
+  }
+  .page-navigation__items {
+    display: none;
+  }
+}
+
+.visible {
+  display: block;
+}
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+  .video__iframe {
+    width: 90vw;
+  }
+}
+
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}
+
+
+.gallery__item {
+  flex-grow: 1;
+  width: 33%;
+  padding: 15px;
+}
+.gallery__image {
+  width: 100%;
+}
+
+
+@supports (grid-gap: 30px) {
+  .gallery {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+  }
+  .gallery__item {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .gallery {
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10vw;
+  }
+  .gallery__item {
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 601px) {
+#contact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 200px 400px 100px;
+  align-items: center;
+  text-align: left;
+}
+
+#contact .content-section__header {
+  grid-column: 1 / 3;
+  text-align: right;
+}
+
+#contact .gallery__image {
+  width: 100%;
+}
+}
+
+address {
+  padding-left: 80px;
+}
+
+
+@media (max-width: 600px) {
+  #contact {
+    display: grid;
+    width: 100vw;
+    grid-template-columns: 1fr;
+    text-align: center;
+    grid-gap: 10vw;
+  }
+
+  #contact .content-section__header {
+    text-align: center;
+    display: inline-block;
+  }
+
+  #contact .gallery__image {
+    width: 100%;
+    padding: 0 5%;
+  }
+
+  address {
+    padding-left: 0;
+  }
+}
+
+
+
+
+.form__field {
+  display: grid;
+  width: 50%;
+  text-align: left;
+  align-items: left;
+}
+
+.form__field .button {
+  width: 70%;
+  padding: 5px;
+}
+
+@media (max-width: 600px) {
+  .form__field {
+    display: grid;
+    width: 100%;
+    text-align: left;
+    align-items: center;
+    padding: 0 5%;
+  }
+
+  .form__field .button {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+
+.content-section__header {
+  padding-top: 10%;
+  margin-bottom: 50px;
+}
+
+
+
+.page-navigation__item {
+  font-family: "Open Sans";
+  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 2rem;
+}
+
+.page-navigation__item a {
+  text-decoration: none;
+    color: #EF008E;
+    opacity: 0.6;
+    letter-spacing: 1.6px;
+
+}
+
+.title1 {
+  font-family: "Open Sans";
+  font-weight: bold;
+  font-size: 28px;
+  text-transform: uppercase;
+  color: #EF008E;
+  letter-spacing: 4.5px;
+}
+
+.title2 {
+  color: #CCC8FF;
+  font-family: "Open Sans";
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 15px;
+  letter-spacing: 3.8px;
+  line-height: 1rem;
+}
+
+.body1 {
+  color: #CCC8FF;
+  opacity: 0.8;
+  font-family: "Open Sans";
+  font-size: 13px;
+  margin-top: 0;
+  letter-spacing: 1.5px;
+  font-weight: normal;
+}
+
+.body2 {
+  color: #CCC8FF;
+  opacity: 0.5;
+  font-family: "Open Sans";
+  font-size: 13px;
+  letter-spacing: 3.5px;
+  margin-top: 0;
+}
+
+.border_bottom {
+  border-bottom: 2px solid;
+  border-color: #EF008E;
+}
+
+.border_top {
+  border-top: 2px solid;
+  border-color: #EF008E;
+}
+
+.button {
+  border-style: none;
+  font-family: "Open Sans";
+  color: rgba(204, 200, 255, 0.8);
+  text-transform: uppercase;
+  font-weight: SEMIBOLD;
+  font-size: 12px;
+  background: rgba(204, 200, 255, 0.1);
+  border-radius: 5%;
+}
+
+.form__input {
+  border-style: none;
+  font-family: "Open Sans";
+  color: rgba(204, 200, 255, 0.8);
+  font-weight: SEMIBOLD;
+  font-size: 12px;
+  background: rgba(204, 200, 255, 0.1);
+  margin: 3px 3px 15px 0;
+  padding: 5px;
+  border-radius: 5%;
+}
+
+
+/* stylizacja ikon w lewym dolnym rogu */
+.social-links__item a {
+  font-size: 20px;
+  color: #EF008E;
+  opacity: 0.8;
+  line-height: 2rem;
+}
+
+@media (max-width: 600px) {
+  .social-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .social-links__item {
+    padding-top: 8vh;
+    padding-bottom: 3vh;
+    display: inline-block;
+    margin: 0 auto;
+  }
+}
+
+
+/*
+Projekt graficzny zakłada, że każda sekcja strony będzie wypełniać całą wysokość okna przeglądarki
+lub więcej, jeśli zawartość danej sekcji jest wyższa. Dlatego świetnym rozwiązaniem
+będzie użycie jednostki "vh", która oznacza 1% wysokości okna przeglądarki z właściwością "min-height",
+która wymusza wysokość elementu na zadaną wartość lub wyższą.
+*/
+.content-section {
+    min-height: 100vh;
+}
